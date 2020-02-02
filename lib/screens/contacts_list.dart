@@ -1,9 +1,11 @@
-import 'package:estudando_flutter2/database/app_database.dart';
+import 'package:estudando_flutter2/dao/contact_dao.dart';
 import 'package:estudando_flutter2/models/contact.dart';
 import 'package:estudando_flutter2/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatelessWidget {
+
+final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class ContactsList extends StatelessWidget {
         FutureBuilder<List<Contact>>(
           // future: findAll(),
           initialData: List(),
-          future: findAll(),
+          future: _dao.findAll(),
           builder: (context, snapshot){
 
               switch(snapshot.connectionState){
@@ -78,7 +80,6 @@ class _ContactItem extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Card(
                 child: ListTile(
                   title: Text(contact.name, style: TextStyle( fontSize: 24.0 ), ),

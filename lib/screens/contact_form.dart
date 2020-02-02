@@ -1,4 +1,4 @@
-import 'package:estudando_flutter2/database/app_database.dart';
+import 'package:estudando_flutter2/dao/contact_dao.dart';
 import 'package:estudando_flutter2/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,7 @@ class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _accountNumberController = TextEditingController();
 
+  final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _ContactFormState extends State<ContactForm> {
 
                                                     final Contact newContact = Contact(0, name, accountNumber);
 
-                                                    save(newContact).then( (id) => 
+                                                    _dao.save(newContact).then( (id) => 
 
                                                       
                                                       Navigator.pop(context)
