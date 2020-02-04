@@ -8,7 +8,7 @@ Future<Database> getDatabase() async {
 
   return openDatabase(path, onCreate: (db, version) {
       db.execute(ContactDao.tableSql);
-    }, version: 1, 
+    }, version: 2, 
    );
 }
 

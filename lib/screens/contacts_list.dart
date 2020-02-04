@@ -10,7 +10,7 @@ final ContactDao _dao = ContactDao();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: Text('Lista de Contatos'), ) ,
+      appBar: AppBar( title: Text('Transfer'), ) ,
       body: 
         FutureBuilder<List<Contact>>(
           // future: findAll(),
