@@ -18,7 +18,6 @@ class Dashboard extends StatelessWidget {
               child: Image.asset('images/bytebank_logo.png'),
             ),  
 
-
             Container(
               height: 120,
               child: ListView(
@@ -40,44 +39,6 @@ class Dashboard extends StatelessWidget {
                       ],
                     ), 
             )
-
-            
-
-          /*
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: 
-
-            Row(
-              children: <Widget>[
-                  _FeatureItem(
-                                'Transfer', 
-                                Icons.monetization_on,
-                                onClick : (){
-                                  _showContactsList(context);
-                                }, ),
-                  _FeatureItem(
-                                'Transaction Feed', 
-                                Icons.description, 
-                                onClick : (){
-
-                                },
-                  ),
-                  _FeatureItem(
-                                'Transaction Feed', 
-                                Icons.description, 
-                                onClick : (){
-
-                                },
-                  ),
-              ],
-            ), 
-
-
-          )
-          */
-
-
 
           ],
         ), 
