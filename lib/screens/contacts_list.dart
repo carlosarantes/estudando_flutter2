@@ -1,6 +1,8 @@
+import 'package:estudando_flutter2/components/progress.dart';
 import 'package:estudando_flutter2/dao/contact_dao.dart';
 import 'package:estudando_flutter2/models/contact.dart';
 import 'package:estudando_flutter2/screens/contact_form.dart';
+import 'package:estudando_flutter2/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatelessWidget {
@@ -24,16 +26,7 @@ final ContactDao _dao = ContactDao();
                 break;
 
                 case ConnectionState.waiting:
-                  return Center(
-                            child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    CircularProgressIndicator(),
-                                    Text('Loading...'),
-                                  ],
-                                ),
-                          );
+                  return Progress();
                 break;
 
                 case ConnectionState.active:
@@ -44,7 +37,9 @@ final ContactDao _dao = ContactDao();
                   return ListView.builder(
                     itemBuilder: (context, index){
                       final Contact contact = contacts[index];
-                      return _ContactItem(contact);
+                      return _ContactItem(contact, onClick: () => {
+                        Navigator.of(context).push(MaterialPageRoute( builder: (context) => TransactionForm(contact), ))
+                      },);
                     },
                     itemCount: contacts.length,
                   );                  
@@ -75,13 +70,15 @@ final ContactDao _dao = ContactDao();
 class _ContactItem extends StatelessWidget{
 
   final Contact contact;
+  final Function onClick;
 
-  const _ContactItem(this.contact);
+  const _ContactItem(this.contact, { @required this.onClick, });
 
   @override
   Widget build(BuildContext context) {
     return Card(
                 child: ListTile(
+                  onTap: () => onClick(),
                   title: Text(contact.name, style: TextStyle( fontSize: 24.0 ), ),
                   subtitle: Text(contact.accountNumber.toString(), style: TextStyle( fontSize: 16.0 ) ,),
                 ),
