@@ -37,6 +37,7 @@ class TransactionWebClient {
     return Transaction.fromJson(json);                
   }
 
+  /*
   Map<String, dynamic> _toMap(transaction){
     final Map<String, dynamic> transactionMap = {
         'value' : transaction.value,
@@ -47,6 +48,7 @@ class TransactionWebClient {
     };
     return transactionMap;
   }
+  */
 
   Future<List<Transaction>> findAll() async {
 
@@ -57,8 +59,8 @@ class TransactionWebClient {
 
   Future<Transaction> save(Transaction transaction) async {
     
-    final Map<String, dynamic> transactionMap = _toMap(transaction);
-    final String transactionJson = jsonEncode(transactionMap);
+    // final Map<String, dynamic> transactionMap = _toMap(transaction);
+    final String transactionJson = jsonEncode(transaction.toJson());
 
     final Response response = await client.post(baseUrl, 
                                       headers: { 'Content-type' : 'application/json',
