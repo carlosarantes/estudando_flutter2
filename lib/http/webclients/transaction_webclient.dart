@@ -9,46 +9,13 @@ class TransactionWebClient {
 
   List<Transaction> _toTransactions(response) {
     final List<dynamic> decodedJson = jsonDecode(response.body);
-    final List<Transaction> transactions = List();
 
-    for(Map<String, dynamic> transactionJson in decodedJson) {
+    final List<Transaction> transactions = decodedJson.map( (dynamic json) {
+        return Transaction.fromJson(json);
+    }).toList();
 
-       /* final Map<String, dynamic> contactJson = transactionJson['contact'];
-
-        final Transaction transaction = Transaction( transactionJson['value'], 
-              Contact(0, contactJson['name'], 
-                          contactJson['accountNumber'], ) );*/
-
-        transactions.add(Transaction.fromJson(transactionJson));
-    }
     return transactions;
   }
-
-  Transaction _toTransaction(response) {
-    Map<String, dynamic> json = jsonDecode(response.body);
-    
-    /*
-      final Map<String, dynamic> contactJson = json['contact'];
-      return Transaction( json['value'], 
-          Contact(0, contactJson['name'], 
-                      contactJson['accountNumber'], ) );
-    */
-
-    return Transaction.fromJson(json);                
-  }
-
-  /*
-  Map<String, dynamic> _toMap(transaction){
-    final Map<String, dynamic> transactionMap = {
-        'value' : transaction.value,
-        'contact' : {
-          'name' : transaction.contact.name,
-          'accountNumber' : transaction.contact.accountNumber
-        }
-    };
-    return transactionMap;
-  }
-  */
 
   Future<List<Transaction>> findAll() async {
 
@@ -59,7 +26,6 @@ class TransactionWebClient {
 
   Future<Transaction> save(Transaction transaction) async {
     
-    // final Map<String, dynamic> transactionMap = _toMap(transaction);
     final String transactionJson = jsonEncode(transaction.toJson());
 
     final Response response = await client.post(baseUrl, 
@@ -67,6 +33,6 @@ class TransactionWebClient {
                                                 'password'  : '1000' }, 
                                                 body: transactionJson);
   
-    return _toTransaction(response);
+    return Transaction.fromJson(jsonDecode(response.body)); 
   }
 }
