@@ -15,14 +15,22 @@ class TransactionWebClient {
     return decodedJson.map( (dynamic json) => Transaction.fromJson(json)).toList();
   }
 
-  Future<Transaction> save(Transaction transaction) async {
+  Future<Transaction> save(Transaction transaction, String password) async {
     
     final String transactionJson = jsonEncode(transaction.toJson());
 
     final Response response = await client.post(baseUrl, 
                                       headers: { 'Content-type' : 'application/json',
-                                                'password'  : '1000' }, 
+                                                'password'  : password }, 
                                                 body: transactionJson);
+
+    if (response.statusCode == 400) {
+      throw Exception('Deu merda'); 
+    }                                            
+
+    if (response.statusCode == 401) {
+      throw Exception('Poe a senha seu corno'); 
+    }                          
   
     return Transaction.fromJson(jsonDecode(response.body)); 
   }
