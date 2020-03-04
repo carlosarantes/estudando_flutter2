@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:estudando_flutter2/http/webclient.dart';
-import 'package:estudando_flutter2/models/contact.dart';
 import 'package:estudando_flutter2/models/transaction.dart';
 import 'package:http/http.dart';
 
@@ -24,14 +23,22 @@ class TransactionWebClient {
                                                 'password'  : password }, 
                                                 body: transactionJson);
 
-    if (response.statusCode == 400) {
-      throw Exception('Deu merda'); 
-    }                                            
+    if (response.statusCode == 200) {
+      return Transaction.fromJson(jsonDecode(response.body)); 
+    }
 
-    if (response.statusCode == 401) {
-      throw Exception('Poe a senha seu corno'); 
-    }                          
-  
-    return Transaction.fromJson(jsonDecode(response.body)); 
+    _throwHttpError(response.statusCode);
   }
+
+
+  void _throwHttpError(int statusCode){
+       throw Exception(_statusCodeResponses[statusCode]);
+  }
+
+  static final Map<int, String> _statusCodeResponses = {
+    400 : 'Deu merda',
+    401 : 'Poe a senha seu corno'
+  };
+
 }
+
