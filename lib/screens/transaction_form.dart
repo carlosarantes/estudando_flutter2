@@ -6,6 +6,7 @@ import 'package:estudando_flutter2/http/webclients/transaction_webclient.dart';
 import 'package:estudando_flutter2/models/contact.dart';
 import 'package:estudando_flutter2/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class TransactionForm extends StatefulWidget {
   final Contact contact;
@@ -20,6 +21,7 @@ class _TransactionFormState extends State<TransactionForm> {
   
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _webClient = TransactionWebClient();
+  final String transactionId = Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   child: RaisedButton(
                     child: Text('Transfer'), onPressed: () {
                       final double value = double.tryParse(_valueController.text);
-                      final transactionCreated = Transaction(value, widget.contact);
+                      final transactionCreated = Transaction(transactionId, value, widget.contact);
                       
                       showDialog(context: context, builder: (contextDialog) {
                          return TransactionAuthDialog(  onConfirm: (String password) { 

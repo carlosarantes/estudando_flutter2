@@ -29,15 +29,26 @@ class TransactionWebClient {
       return Transaction.fromJson(jsonDecode(response.body)); 
     }
 
-    throw HttpException(_statusCodeResponses[response.statusCode]);
+    throw HttpException(_getMessage(response.statusCode));
   }
 
   static final Map<int, String> _statusCodeResponses = {
     400 : 'Deu merda',
-    401 : 'Poe a senha seu corno'
+    401 : 'Poe a senha seu corno',
+    409 : 'Voce já fez isso doidão...'
   };
 
+  String _getMessage(int statusCode) {
+
+    if (_statusCodeResponses.containsKey(statusCode)) {
+      return _statusCodeResponses[statusCode];
+    }
+
+    return 'Deu merda mano';
+  }
 }
+
+
 
 class HttpException implements Exception {
   final String message;
